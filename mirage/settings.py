@@ -38,6 +38,7 @@ TEMPLATE_DIRS = (
 
 )
 ALLOWED_HOSTS = [
+    '.cloud.gov',
     '.gsa.gov',
     '127.0.0.1', 
     '.18f.us',
@@ -54,9 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
-
     'api',
     'mirage_site',
     'vendor',

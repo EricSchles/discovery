@@ -1,3 +1,5 @@
+import dj_database_url
+
 """
 Django settings for mirage project.
 
@@ -82,7 +84,8 @@ WSGI_APPLICATION = 'mirage.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
 
 
 # Internationalization

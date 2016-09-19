@@ -6,3 +6,6 @@ applications:
 - name: discovery
   path: .
   timeout: 180
+default_versions:
+- name: python
+  version: 3.5.2

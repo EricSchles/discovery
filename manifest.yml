@@ -7,7 +7,6 @@ applications:
 - name: discovery-dev
   path: .
   timeout: 180
-  buildpack: python-buildpack
 services:
   - discovery-db
 domain: 18f.gov

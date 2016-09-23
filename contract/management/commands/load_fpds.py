@@ -3,7 +3,7 @@ from optparse import make_option
 from django.core.management import call_command
 from django.conf import settings
 from pyfpds import Contracts
-from vendor.models import Vendor
+from apple.models import Vendor
 from contract.models import Contract, FPDSLoad
 from contract import catch_key_error
 from datetime import datetime, timedelta

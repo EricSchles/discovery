@@ -14,12 +14,13 @@ import markdown
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+SECRET_KEY="this is totally a secret"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "mirage.context_processors.api_host",
@@ -190,7 +191,7 @@ SWAGGER_SETTINGS = {
     "exclude_namespaces": [], # List URL namespaces to ignore
     "api_version": '0.1',  # Specify your API's version
     "api_path": "/",  # Specify the path to your API not a root level
-    "api_host": '', #comment out until fix swagger - API_HOST, #the data.gov api host
+    #"api_host": '', #comment out until fix swagger - API_HOST, #the data.gov api host
     "enabled_methods": [  # Specify which methods to enable in Swagger UI
         'get',
     ],

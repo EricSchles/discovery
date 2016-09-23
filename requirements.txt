@@ -8,7 +8,6 @@ django-hstore==1.2.3
 djangorestframework==2.3.14
 psycopg2==2.5.3
 pytz==2014.4
-requests==2.3.0
 titlecase==0.7.1
 xmltodict==0.9.0
 markdown==2.5.2

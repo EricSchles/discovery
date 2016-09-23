@@ -1,0 +1,53 @@
+{% extends "search_base.html" %} 
+{% load staticfiles %}
+
+{% block content %}
+        <!-- BEGIN LANDING HTML -->
+        <div id="about_oasis">
+            <h1>About OASIS</h1>
+
+            <h3>The OASIS Family of Contract Vehicles</h3>
+                
+            <ul class="about_oasis_text">
+                <li>Specifically designed for the acquisition of professional services</li>
+                <li>Enables the use of ANY contract type </li>
+                <li>Separated into unrestricted (OASIS) and Small Business (OASIS SB) to make it easy to reserve task orders for small business categories</li>
+                <li>All vendors have DCAA-vetted financial systems</li>
+            </ul>
+            
+
+            <h3>What are Pools?</h3>
+            <ul class="about_oasis_text">
+                <li>OASIS spans seven major functional categories that are referred to as pools. </li>
+                <li>Each pool is it’s own IDIQ contract: Therefore you may only publish a solicitation to one of these categories. </li>
+                <li>If your contracting need spans multiple categories, choose the one that contains the preponderance of your work. Selecting the most relevant NAICS code above will guide you to the correct pool.</li>
+            </ul>
+        </div><!-- end about_oasis -->
+
+        <div id="data_sources">
+            <h1>Data Sources</h1>
+
+            <div class="data_sources_row">
+                <h4 class="data data_source_name">SAM</h4>
+
+                <span id="data_source_date_sam"></span>
+                <span id="data_source_last_updated">last updated</span>
+                <span class="data_source_description"><br>We pull SAM data directly from the System for Award Management (SAM) to provide supplemental information on all of the vendors in OASIS, including their SAM registration date, any potential suspensions or debarments, and the NAICS codes that a vendor may contract under.</span>
+            </div><!-- end data_sources_row -->
+
+            <div class="data_sources_row">
+                <h4 class="data data_source_name">FPDS</h4>
+                <span id="data_source_date_fpds"></span>
+                <span id="data_source_last_updated">last updated</span>
+                <span class="data_source_description"><br>Discovery loads data from the Federal Procurement Data System (FPDS) to automatically provide you with a context-rich contract history for each OASIS vendor, including the amount of the contract, the primary NAICS code and the pricing type.</span>
+            </div><!-- end data_sources_row -->
+        </div><!-- end data_sources -->
+    <!-- END LANDING HTML -->    
+{% endblock %}
+
+{% block page_js %}
+    <script src="{% static 'mirage_site/js/requests-manager-listings.js' %}"></script>
+    <script src="{% static 'mirage_site/js/layout-manager-listings.js' %}"></script>
+    <script src="{% static 'mirage_site/js/requests-manager-index.js' %}"></script>
+    <script src="{% static 'mirage_site/js/layout-manager-index.js' %}"></script>
+{% endblock %}

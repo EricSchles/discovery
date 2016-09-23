@@ -1,0 +1,13 @@
+---
+# all applications use these settings and services
+memory: 1G
+stack: cflinuxfs2
+instances: 1
+applications:
+- name: discovery-dev
+  path: .
+  timeout: 180
+  buildpack: python-buildpack
+services:
+  - discovery-db
+domain: 18f.gov

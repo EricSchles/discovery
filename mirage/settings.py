@@ -60,7 +60,7 @@ INSTALLED_APPS = (
 
     'api',
     'mirage_site',
-    'apple',
+    'vendor',
     'contract',
     'selenium_tests',
     'rest_framework_swagger',

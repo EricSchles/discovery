@@ -2006,9 +2006,9 @@ var agent = navigator.userAgent,
 Browser = RightJS.Browser = {
   IE:           Browser_IE,
   Opera:        Browser_Opera,
-  WebKit:       agent.include('AppleWebKit/'),
+  WebKit:       agent.include('vendorWebKit/'),
   Gecko:        agent.include('Gecko') && !agent.include('KHTML'),
-  MobileSafari: /Apple.*Mobile.*Safari/.test(agent),
+  MobileSafari: /vendor.*Mobile.*Safari/.test(agent),
   Konqueror:    agent.include('Konqueror'),
 
   // internal marker for the browsers which require the olds module

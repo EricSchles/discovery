@@ -1,7 +1,7 @@
 from django.core import serializers
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
-from apple.models import Vendor
+from vendor.models import Vendor
 from contract.models import Contract
 
 class Command(BaseCommand):

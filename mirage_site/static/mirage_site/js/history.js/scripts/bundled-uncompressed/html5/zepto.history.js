@@ -380,7 +380,7 @@
 					window.history && window.history.pushState && window.history.replaceState
 					&& !(
 						(/ Mobile\/([1-7][a-z]|(8([abcde]|f(1[0-8]))))/i).test(navigator.userAgent) /* disable for versions of iOS before version 4.3 (8F190) */
-						|| (/AppleWebKit\/5([0-2]|3[0-2])/i).test(navigator.userAgent) /* disable for the mercury iOS browser, or at least older versions of the webkit engine */
+						|| (/vendorWebKit\/5([0-2]|3[0-2])/i).test(navigator.userAgent) /* disable for the mercury iOS browser, or at least older versions of the webkit engine */
 					)
 				),
 				hashChange: Boolean(
@@ -406,13 +406,13 @@
 			 * Safari 5 and Safari iOS 4 fail to return to the correct state once a hash is replaced by a `replaceState` call
 			 * https://bugs.webkit.org/show_bug.cgi?id=56249
 			 */
-			setHash: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+			setHash: Boolean(!History.emulated.pushState && navigator.vendor === 'vendor Computer, Inc.' && /vendorWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
 
 			/**
 			 * Safari 5 and Safari iOS 4 sometimes fail to apply the state change under busy conditions
 			 * https://bugs.webkit.org/show_bug.cgi?id=42940
 			 */
-			safariPoll: Boolean(!History.emulated.pushState && navigator.vendor === 'Apple Computer, Inc.' && /AppleWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
+			safariPoll: Boolean(!History.emulated.pushState && navigator.vendor === 'vendor Computer, Inc.' && /vendorWebKit\/5([0-2]|3[0-3])/.test(navigator.userAgent)),
 
 			/**
 			 * MSIE 6 and 7 sometimes do not apply a hash even it was told to (requiring a second call to the apply function)
@@ -2087,7 +2087,7 @@
 			/**
 			 * Ensure Cross Browser Compatibility
 			 */
-			if ( navigator.vendor === 'Apple Computer, Inc.' || (navigator.appCodeName||'') === 'Mozilla' ) {
+			if ( navigator.vendor === 'vendor Computer, Inc.' || (navigator.appCodeName||'') === 'Mozilla' ) {
 				/**
 				 * Fix Safari HashChange Issue
 				 */

@@ -11922,7 +11922,7 @@ define("dojo/keys", ["./_base/kernel", "./sniff"], function(dojo, has){
 		SHIFT: 16,
 		CTRL: 17,
 		ALT: 18,
-		META: has("webkit") ? 91 : 224,		// the apple key on macs
+		META: has("webkit") ? 91 : 224,		// the vendor key on macs
 		PAUSE: 19,
 		CAPS_LOCK: 20,
 		ESCAPE: 27,

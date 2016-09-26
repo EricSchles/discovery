@@ -3,6 +3,8 @@
 memory: 1G
 stack: cflinuxfs2
 instances: 1
+env:
+  DISABLE_COLLECTSTATIC: 1
 applications:
 - name: discovery-dev
   path: .

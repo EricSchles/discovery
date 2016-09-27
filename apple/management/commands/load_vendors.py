@@ -1,6 +1,6 @@
 # from django.core.management.base import BaseCommand, CommandError
 # from django.core.management import call_command
-# from vendor.models import Vendor, Pool, PoolPIID, SetAside
+# from apple.models import Vendor, Pool, PoolPIID, SetAside
 # import csv
 # from django.conf import settings
 # import os

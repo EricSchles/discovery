@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
-from vendor.models import Vendor, Pool, Naics, SetAside
+from apple.models import Vendor, Pool, Naics, SetAside
 from contract.models import Contract
 import csv
 from titlecase import titlecase

@@ -1,5 +1,5 @@
 from django.test import TestCase
-from vendor.models import Vendor
+from apple.models import Vendor
 from django.core.management import call_command
 
 class VendorLoadTest(TestCase):

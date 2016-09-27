@@ -15,7 +15,6 @@ import markdown
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY="this is totally a secret"
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -55,12 +54,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
-
     'api',
     'mirage_site',
-    'vendor',
+    'apple',
     'contract',
     'selenium_tests',
     'rest_framework_swagger',
@@ -84,7 +81,16 @@ WSGI_APPLICATION = 'mirage.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'oasis',
+        'USER': 'oasis',
+        'PASSWORD': '1234'
+    }
+}
 
+SAM_API_KEY = ''
 
 
 # Internationalization

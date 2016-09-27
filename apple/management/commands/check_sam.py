@@ -10,7 +10,7 @@
 # from django.core.management.base import BaseCommand, CommandError
 # from django.utils import timezone
 
-# from vendor.models import Vendor, Pool, SetAside, SamLoad
+# from apple.models import Vendor, Pool, SetAside, SamLoad
 
 # warnings.filterwarnings('ignore')
 

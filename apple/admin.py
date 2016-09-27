@@ -1,5 +1,5 @@
 from django.contrib import admin
-from vendor.models import Naics, Pool, Vendor, SetAside, PoolPIID
+from apple.models import Naics, Pool, Vendor, SetAside, PoolPIID
 
 admin.site.register(Naics)
 admin.site.register(Vendor)

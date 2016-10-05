@@ -13,7 +13,6 @@ import os
 import markdown
 import dj_database_url
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY="this is totally a secret"
@@ -84,13 +83,14 @@ WSGI_APPLICATION = 'mirage.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'oasis',
-        'USER': 'oasis',
-        'PASSWORD': '1234'
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'oasis',
+    #     'USER': 'oasis',
+    #     'PASSWORD': '1234'
+    # }
 }
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 SAM_API_KEY = ''
 API_HOST = "https://data.gov"

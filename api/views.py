@@ -7,33 +7,33 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from contract.models import Contract
-from apple.models import Vendor, Naics, SetAside, SamLoad, Pool
-from api.serializers import VendorSerializer, NaicsSerializer, PoolSerializer, ShortVendorSerializer, ContractSerializer, PaginatedContractSerializer, Metadata, MetadataSerializer, ShortPoolSerializer
+from vendors.models import Vendors, Naics, SetAside, SamLoad, Pool
+from api.serializers import vendorserializer, NaicsSerializer, PoolSerializer, Shortvendorserializer, ContractSerializer, PaginatedContractSerializer, Metadata, MetadataSerializer, ShortPoolSerializer
 
 
-class GetVendor(APIView):
+class GetVendors(APIView):
     """
-    This endpoint returns a single vendor by their 9 digit DUNS number. DUNS numbers can be looked up in the [System for Award Management](https://www.sam.gov) by vendor name.
+    This endpoint returns a single vendors by their 9 digit DUNS number. DUNS numbers can be looked up in the [System for Award Management](https://www.sam.gov) by vendors name.
     ---
     GET:
         parameters:
           - name: duns
-            description: a nine digit DUNS number that uniquely identifies the vendor (required)
+            description: a nine digit DUNS number that uniquely identifies the vendors (required)
             required: true
             type: string
             paramType: path
     """
     def get(self, request, duns, format=None):
-        vendor = Vendor.objects.get(duns=duns) 
-        return Response(VendorSerializer(vendor).data) 
+        vendors = Vendors.objects.get(duns=duns) 
+        return Response(vendorserializer(vendors).data) 
 
-class ListVendors(APIView):
+class Listvendors(APIView):
     """
     This endpoint returns a list of vendors filtered by a NAICS code. The NAICS code maps to an OASIS pool and is used to retrieve vendors in that pool only.
 
     OASIS pools are groupings of NAICS codes that have the same small business size standard. Because contracts solicited to OASIS vendors can only be issued to one pool, much of the data is presented as part of a pool grouping. Using the NAICS code is a shortcut, so that you don't have to explicitly map the NAICS code to a pool in OASIS yourself.
     
-    Vendors can also be filtered by a particular setaside. Valid values for the setasides are two-character codes which include:
+    vendors can also be filtered by a particular setaside. Valid values for the setasides are two-character codes which include:
 
     * A6 (8(a))
     * XX (Hubzone)
@@ -81,7 +81,7 @@ class ListVendors(APIView):
             sam_load_results = SamLoad.objects.all().order_by('-sam_load')[:1]
             sam_load = sam_load_results[0].sam_load if sam_load_results else None
 
-            v_serializer = ShortVendorSerializer(self.get_queryset(pool, setasides, naics), many=True, context={'naics': naics})
+            v_serializer = Shortvendorserializer(self.get_queryset(pool, setasides, naics), many=True, context={'naics': naics})
             v_serializer.data.sort(key=lambda k: k['contracts_in_naics'], reverse=True)
             p_serializer = ShortPoolSerializer(pool)
 
@@ -91,7 +91,7 @@ class ListVendors(APIView):
             return HttpResponseBadRequest("You must provide a valid naics code that maps to an OASIS pool")
 
     def get_queryset(self, pool, setasides, naics):
-        vendors = Vendor.objects.filter(pools__in=pool)
+        vendors = Vendors.objects.filter(pools__in=pool)
         if setasides:
             for sa in SetAside.objects.filter(code__in=setasides):
                 vendors = vendors.filter(setasides=sa)
@@ -123,13 +123,13 @@ class ListNaics(APIView):
 class ListContracts(APIView):
     """ 
     
-    This endpoint returns contract history from FPDS for a specific vendor. The vendor's DUNS number is a required parameter. You can also filter contracts by their NAICS code to find contracts relevant to a particular category. 
+    This endpoint returns contract history from FPDS for a specific vendors. The vendors's DUNS number is a required parameter. You can also filter contracts by their NAICS code to find contracts relevant to a particular category. 
     
     ---
     GET:
         parameters:
           - name: duns
-            description: A 9-digit DUNS number that uniquely identifies a vendor (required).
+            description: A 9-digit DUNS number that uniquely identifies a vendors (required).
             required: true
             type: string
             paramType: query
@@ -158,7 +158,7 @@ class ListContracts(APIView):
         contracts = self.get_queryset()
 
         if contracts == 1:
-            return HttpResponseBadRequest("You must provide a vendor DUNS to retrieve contracts.")
+            return HttpResponseBadRequest("You must provide a vendors DUNS to retrieve contracts.")
 
         else:
             paginator = Paginator(contracts, 100)
@@ -181,7 +181,7 @@ class ListContracts(APIView):
         if not duns:
             return 1
 
-        vendor = Vendor.objects.get(duns=duns)
+        vendors = Vendors.objects.get(duns=duns)
         sort = self.request.QUERY_PARAMS.get('sort', None)
         direction = self.request.QUERY_PARAMS.get('direction', None)
 
@@ -192,7 +192,7 @@ class ListContracts(APIView):
             sort = 'date'
             direction = 'desc'
 
-        contracts = Contract.objects.filter(vendor=vendor).order_by(dir_map[direction] + sort_map[sort])
+        contracts = Contract.objects.filter(vendors=vendors).order_by(dir_map[direction] + sort_map[sort])
         
         if naics:
             #contracts = contracts.filter(NAICS=Naics.objects.filter(code=naics)[0])

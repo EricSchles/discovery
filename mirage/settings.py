@@ -57,7 +57,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'mirage_site',
-    'apple',
+    'vendors',
     'contract',
     'selenium_tests',
     'rest_framework_swagger',
@@ -91,7 +91,8 @@ DATABASES = {
 }
 
 SAM_API_KEY = ''
-
+API_HOST = "https://data.gov"
+API_KEY = os.getenv("OASIS_DISCOVERY_API_KEY")
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

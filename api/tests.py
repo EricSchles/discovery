@@ -1,7 +1,7 @@
 from django.test import Client, TestCase
 from django.utils import timezone
 
-from apple.models import SamLoad
+from vendors.models import SamLoad
 
 class NaicsTest(TestCase):
     """tests for NAICS API endpoint"""
@@ -20,8 +20,8 @@ class NaicsTest(TestCase):
         self.assertEqual(resp.status_code, 200)
 
 
-class VendorsTest(TestCase):
-    """test for vendor API endpoint"""
+class vendorsTest(TestCase):
+    """test for vendors API endpoint"""
     fixtures = ['vendors.json']
  
     def setUp(self):
@@ -74,15 +74,15 @@ class VendorsTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(len(resp.data['results']), resp.data['num_results'])
 
-class VendorTest(TestCase):
-    """ tests single vendor endpoint """
+class VendorsTest(TestCase):
+    """ tests single vendors endpoint """
     fixtures = ['vendors.json'] 
 
     def setUp(self):
         self.c = Client()
-        self.path = '/api/vendor/075458455/'
+        self.path = '/api/vendors/075458455/'
 
-    def test_vendor_exists(self):
+    def test_vendors_exists(self):
         resp = self.c.get(self.path)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.data['name'] , 'Dynetics, Inc.')

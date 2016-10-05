@@ -1,1 +1,1 @@
-web: waitress-serve --port=8080 mirage.wsgi:application
+web: waitress-serve --port=$PORT mirage.wsgi:application

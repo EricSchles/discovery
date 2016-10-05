@@ -105,7 +105,7 @@ class FunctionalTests(LiveServerTestCase):
         self.assertEqual("541330 - Engineering Services", driver.find_element_by_id("your_search").text)
 
 
-    def test_vendor_count_in_search_results(self):
+    def test_vendors_count_in_search_results(self):
         driver = self.driver
         #load search results
         driver.get(self.base_url + "/results?vehicle=oasissb&naics-code=541330&setasides=A5&")
@@ -136,25 +136,25 @@ class FunctionalTests(LiveServerTestCase):
         except Exception as e:
             raise
 
-    def test_vendor_info(self):
+    def test_vendors_info(self):
         driver = self.driver
-        #load vendor page
-        driver.get(self.base_url + "/vendor/786997739/?setasides=A6&vehicle=oasissb&naics-code=541330&")
+        #load vendors page
+        driver.get(self.base_url + "/vendors/786997739/?setasides=A6&vehicle=oasissb&naics-code=541330&")
         #check CAGE code, DUNS number, employees, revenue, address, address2, poc_name, poc_phone
         self.assertEqual("4UYY6", driver.find_element_by_css_selector("span.cage_code.admin_data").text)
         self.assertEqual("786997739", driver.find_element_by_css_selector("span.duns_number.admin_data").text)
         self.assertTrue(11 <= int(driver.find_element_by_css_selector("span.number_of_employees.admin_data").text.replace(',', '')))
         self.assertTrue(2876591 <= int(driver.find_element_by_css_selector("span.annual_revenue.admin_data").text.replace(',', '').replace('$', '')))
-        self.assertEqual("13873 Park Center Rd Ste 400N", driver.find_element_by_css_selector("span.vendor_address1.admin_data2").text)
-        self.assertEqual("Herndon, VA 20171", driver.find_element_by_css_selector("span.vendor_address2.admin_data2").text)
-        self.assertEqual("Paul Kwiatkowski", driver.find_element_by_css_selector("span.vendor_poc_name.admin_data2").text)
-        self.assertEqual("703-766-7714", driver.find_element_by_css_selector("span.vendor_poc_phone.admin_data2").text)
-        self.assertEqual("Paul.Kwiatkowski@Akima.com", driver.find_element_by_css_selector("span.vendor_poc_email.admin_data2").text)
+        self.assertEqual("13873 Park Center Rd Ste 400N", driver.find_element_by_css_selector("span.vendors_address1.admin_data2").text)
+        self.assertEqual("Herndon, VA 20171", driver.find_element_by_css_selector("span.vendors_address2.admin_data2").text)
+        self.assertEqual("Paul Kwiatkowski", driver.find_element_by_css_selector("span.vendors_poc_name.admin_data2").text)
+        self.assertEqual("703-766-7714", driver.find_element_by_css_selector("span.vendors_poc_phone.admin_data2").text)
+        self.assertEqual("Paul.Kwiatkowski@Akima.com", driver.find_element_by_css_selector("span.vendors_poc_email.admin_data2").text)
 
     def test_all_contracts_button(self):
         driver = self.driver
-        #load vendor page with showall=true
-        driver.get(self.base_url + "/vendor/786997739/?vehicle=oasissb&naics-code=541330&showall=true")
+        #load vendors page with showall=true
+        driver.get(self.base_url + "/vendors/786997739/?vehicle=oasissb&naics-code=541330&showall=true")
         #make sure text of all contracts button is 'All Contracts'
         all_contracts_button = driver.find_element_by_id('all_contracts_button')
         self.assertEqual("All Contracts", all_contracts_button.text)
@@ -166,8 +166,8 @@ class FunctionalTests(LiveServerTestCase):
 
     def test_naics_contracts_button(self):
         driver = self.driver
-        #load vendor page
-        driver.get(self.base_url + "/vendor/786997739/?vehicle=oasissb&naics-code=541330")
+        #load vendors page
+        driver.get(self.base_url + "/vendors/786997739/?vehicle=oasissb&naics-code=541330")
         #make sure text of NAICS button is 'NAICS <naics-code>'
         naics_contracts_button = driver.find_element_by_id('naics_contracts_button')
         self.assertEqual("NAICS 541330", naics_contracts_button.text)
@@ -179,14 +179,14 @@ class FunctionalTests(LiveServerTestCase):
 
     def test_contract_info_displayed(self):
         driver = self.driver
-        #load vendor page
-        driver.get(self.base_url + "/vendor/786997739/?vehicle=oasissb&naics-code=541330&")
+        #load vendors page
+        driver.get(self.base_url + "/vendors/786997739/?vehicle=oasissb&naics-code=541330&")
         #verify that contracts list isn't empty
         self.assertFalse(driver.find_element_by_id('no_matching_contracts').is_displayed())
         #make sure at least one row exists
         self.assertTrue(driver.find_element_by_xpath('//*[@id="ch_table"]/table/tbody/tr[2]'))
-        #open vendor with naics subcategory
-        driver.get(self.base_url + "/vendor/102067378/?vehicle=oasissb&naics-code=541712B&")
+        #open vendors with naics subcategory
+        driver.get(self.base_url + "/vendors/102067378/?vehicle=oasissb&naics-code=541712B&")
         time.sleep(0.5)
         #make sure at least one row exists
         self.assertTrue(driver.find_element_by_xpath('//*[@id="ch_table"]/table/tbody/tr[2]'))
@@ -220,10 +220,10 @@ class FunctionalTests(LiveServerTestCase):
         time.sleep(0.5)
         #make sure csv link exists and is correct
         self.assertRegex(driver.find_element_by_link_text("download data (CSV)").get_attribute("href"), r"^[\s\S]*/results/csv[\s\S]*$")
-        #load vendor detail page
-        driver.get(self.base_url + "/vendor/786997739/?naics-code=541620&")
+        #load vendors detail page
+        driver.get(self.base_url + "/vendors/786997739/?naics-code=541620&")
         #make sure csv link exists and is correct
-        self.assertRegex(driver.find_element_by_link_text("download vendor data (CSV)").get_attribute("href"), r"^[\s\S]*/vendor/[\s\S]*/csv[\s\S]*$")
+        self.assertRegex(driver.find_element_by_link_text("download vendors data (CSV)").get_attribute("href"), r"^[\s\S]*/vendors/[\s\S]*/csv[\s\S]*$")
 
     def test_footer_links(self):
         driver = self.driver
@@ -238,7 +238,7 @@ class FunctionalTests(LiveServerTestCase):
         self.assertEqual(driver.find_element_by_link_text("OASIS Program Home").get_attribute("href"), "http://www.gsa.gov/oasis")
         #check GitHub link text and href
         self.assertEqual(driver.find_element_by_link_text("Check out our code on GitHub").get_attribute("href"), "https://github.com/18F/mirage")
-        #load vendor detail page
+        #load vendors detail page
         #check OASIS program home link text and href
         self.assertEqual(driver.find_element_by_link_text("OASIS Program Home").get_attribute("href"), "http://www.gsa.gov/oasis")
         #check GitHub link text and href
@@ -266,46 +266,46 @@ class FunctionalTests(LiveServerTestCase):
 
     def test_poc_header_exists(self):
         driver = self.driver
-        #open vendor detail page
-        driver.get(self.base_url + '/vendor/786997739/?naics-code=541618&')
+        #open vendors detail page
+        driver.get(self.base_url + '/vendors/786997739/?naics-code=541618&')
         #make sure title of point of contact section in header is 'OASIS POC'
         self.assertEqual(driver.find_element_by_css_selector('p.admin_title').text, 'OASIS POC')
 
     def test_no_matching_contracts_indicator(self):
         driver = self.driver
-        #open vendor detail page where naics contract total is zero
-        driver.get(self.base_url + '/vendor/799582379/?vehicle=oasissb&naics-code=541360&')
+        #open vendors detail page where naics contract total is zero
+        driver.get(self.base_url + '/vendors/799582379/?vehicle=oasissb&naics-code=541360&')
         #make sure no matching contracts indicator is displayed
         self.assertTrue(driver.find_element_by_id('no_matching_contracts').is_displayed())
-        #open vendor detail apge where naics contract total is one or more
-        driver.get(self.base_url + '/vendor/799582379/?vehicle=oasissb&naics-code=541330&')
+        #open vendors detail apge where naics contract total is one or more
+        driver.get(self.base_url + '/vendors/799582379/?vehicle=oasissb&naics-code=541330&')
         #make sure no matching contracts indicator is not displayed
         self.assertFalse(driver.find_element_by_id('no_matching_contracts').is_displayed())
 
     def test_small_business_badge(self):
         driver = self.driver
-        #open vendor detail page where sb badge is expected
-        driver.get(self.base_url + '/vendor/075458455/?setasides=XX&vehicle=oasissb&naics-code=541330&')
+        #open vendors detail page where sb badge is expected
+        driver.get(self.base_url + '/vendors/075458455/?setasides=XX&vehicle=oasissb&naics-code=541330&')
         self.assertTrue(driver.find_element_by_id('sb_badge').is_displayed())
-        #open vendor detail page when sb badge is not expected
-        driver.get(self.base_url + '/vendor/806849303/?setasides=XX&vehicle=oasissb&naics-code=541330&')
+        #open vendors detail page when sb badge is not expected
+        driver.get(self.base_url + '/vendors/806849303/?setasides=XX&vehicle=oasissb&naics-code=541330&')
         self.assertFalse(driver.find_element_by_id('sb_badge').is_displayed())
 
-    def test_vendor_site(self):
+    def test_vendors_site(self):
         driver = self.driver
-        #open page for vendor with site in SAM data
-        driver.get(self.base_url + '/vendor/786997739/?vehicle=oasissb&naics-code=541330&')
+        #open page for vendors with site in SAM data
+        driver.get(self.base_url + '/vendors/786997739/?vehicle=oasissb&naics-code=541330&')
         #make sure link to site is displayed and href is valid
-        self.assertTrue(driver.find_element_by_id('vendor_site_link').is_displayed())
-        self.assertEqual(driver.find_element_by_id('vendor_site_link').get_attribute("href"), 'http://www.ikun.com/')
-        #open vendor with no site in SAM data
-        driver.get(self.base_url + '/vendor/160062311/?vehicle=oasissb&naics-code=541330&')
+        self.assertTrue(driver.find_element_by_id('vendors_site_link').is_displayed())
+        self.assertEqual(driver.find_element_by_id('vendors_site_link').get_attribute("href"), 'http://www.ikun.com/')
+        #open vendors with no site in SAM data
+        driver.get(self.base_url + '/vendors/160062311/?vehicle=oasissb&naics-code=541330&')
         #make sure link to site is NOT displayed
-        self.assertFalse(driver.find_element_by_id('vendor_site_link').is_displayed())
+        self.assertFalse(driver.find_element_by_id('vendors_site_link').is_displayed())
 
     def test_unrestricted_socioeconomic_factors(self):
         driver = self.driver
-        #open page for vendor list in OASIS Unrestricted
+        #open page for vendors list in OASIS Unrestricted
         driver.get(self.base_url + '/results?vehicle=oasis&naics-code=541330&')
         #make sure socioeconomic indicator headers exist
         self.assertEqual(driver.find_element_by_xpath('//*[@id="pool_vendors"]/tbody/tr[1]/td[4]').text, '8(a)')
@@ -332,7 +332,7 @@ class FunctionalTests(LiveServerTestCase):
 
     def test_contracts_sorting(self):
         driver = self.driver
-        driver.get(self.base_url + '/vendor/197503212/?vehicle=oasissb&naics-code=541330&')
+        driver.get(self.base_url + '/vendors/197503212/?vehicle=oasissb&naics-code=541330&')
         element = WebDriverWait(driver, 3).until(
             EC.presence_of_element_located((By.CLASS_NAME, "h_value"))
         )
@@ -359,8 +359,8 @@ class FunctionalTests(LiveServerTestCase):
 
     def test_contract_pagination(self):
         driver = self.driver
-        #open a vendor page where vendor has more than 100 search results
-        driver.get(self.base_url + '/vendor/197138274/?vehicle=oasis&naics-code=541330&')
+        #open a vendors page where vendors has more than 100 search results
+        driver.get(self.base_url + '/vendors/197138274/?vehicle=oasis&naics-code=541330&')
         #no more than 100 contracts are listed
         self.assertEqual(driver.find_element_by_id('contracts_current').text, '1 - 100')
         #total number of contracts is displayed
@@ -368,8 +368,8 @@ class FunctionalTests(LiveServerTestCase):
         self.assertTrue(driver.find_element_by_id('pagination_container').is_displayed())
         self.assertTrue(driver.find_element_by_id('viewing_contracts').is_displayed())
 
-        #open a vendor page where vendor has zero naics results
-        driver.get(self.base_url + '/vendor/611390592/?vehicle=oasissb&naics-code=541330&')
+        #open a vendors page where vendors has zero naics results
+        driver.get(self.base_url + '/vendors/611390592/?vehicle=oasissb&naics-code=541330&')
         self.assertFalse(driver.find_element_by_id('pagination_container').is_displayed())
         self.assertFalse(driver.find_element_by_id('viewing_contracts').is_displayed())
 

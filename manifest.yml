@@ -9,5 +9,4 @@ applications:
   timeout: 180
 services:
   - discovery-db
-domain: 18f.gov
 

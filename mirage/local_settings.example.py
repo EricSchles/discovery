@@ -7,7 +7,7 @@ DATABASES = {
     }
 }
 
-SAM_API_KEY = ''
+SAM_API_KEY = os.getenv("OASIS_DISCOVERY_SAM_API_KEY")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # change this before deploying to your own server!

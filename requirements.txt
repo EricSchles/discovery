@@ -13,3 +13,6 @@ xmltodict
 markdown
 django-storages
 requests
+waitress
+whitenoise
+dj-database-url

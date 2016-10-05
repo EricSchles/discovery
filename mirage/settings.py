@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import markdown
+import dj_database_url
 
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY="this is totally a secret"

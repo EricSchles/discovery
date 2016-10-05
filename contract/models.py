@@ -1,5 +1,5 @@
 from django.db import models, IntegrityError
-from apple.models import Naics, Vendor
+from vendors.models import Naics, Vendors
 
 PRICING_CHOICES = (
     ('A', 'Fixed Price Redetermination'),
@@ -38,8 +38,8 @@ REASON_FOR_MODIFICATION_CHOICES = (
     ('R', 'Rerepresentation'),
     ('S', 'Change PIID'),
     ('T', 'Transfer Action'),
-    ('V', 'Vendor DUNS Change'),
-    ('W', 'Vendor Address Change'),
+    ('V', 'Vendors DUNS Change'),
+    ('W', 'Vendors Address Change'),
     ('X', 'Terminated for Cause'),
     ('C1', 'Completed'),
     ('C2', 'Current'),
@@ -58,7 +58,7 @@ class Contract(models.Model):
     PSC = models.CharField(max_length=128, null=True)
     date_signed = models.DateTimeField(null=True)
     completion_date = models.DateTimeField(null=True)
-    vendor = models.ForeignKey(Vendor)
+    vendors = models.ForeignKey(Vendors)
     pricing_type = models.CharField(choices=PRICING_CHOICES, max_length=2, null=True)
     obligated_amount = models.DecimalField(max_digits=128, decimal_places=2, null=True)
     point_of_contact = models.EmailField(null=True)
@@ -68,11 +68,11 @@ class Contract(models.Model):
         
         try:
             obj = Contract.objects.get(piid=self.piid, agency_id=self.agency_id)
-            #piid with that vendor already exists
+            #piid with that vendors already exists
             if obj.id == self.id:
                 super(Contract, self).save(*args, **kwargs)
             else:
-                raise IntegrityError("Contract already exists for that vendor and piid")
+                raise IntegrityError("Contract already exists for that vendors and piid")
         except:
             super(Contract, self).save(*args, **kwargs)
 

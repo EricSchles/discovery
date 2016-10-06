@@ -21,7 +21,7 @@ class Command(BaseCommand):
         return self.replace_x(duns) + '0000'
 
     def load_temp_setasides(self):
-        reader = csv.reader(open(os.path.join(settings.BASE_DIR, 'Vendors/docs/temp_8a_hubzone.csv'))) 
+        reader = csv.reader(open(os.path.join(settings.BASE_DIR, 'vendors/docs/temp_8a_hubzone.csv'))) 
         for line in reader:
             v = Vendors.objects.get(duns=line[1])
             sa = SetAside.objects.get(code=line[2])
@@ -35,7 +35,7 @@ class Command(BaseCommand):
         
         for vehicle in settings.VEHICLES:
             #cycle through predefined set of vehicles
-            doc_dir = os.path.join(settings.BASE_DIR, 'Vendors/docs/{0}/pools'.format(vehicle))
+            doc_dir = os.path.join(settings.BASE_DIR, 'vendors/docs/{0}/pools'.format(vehicle))
             
             for f in os.listdir(doc_dir):
                 datafile = open(os.path.join(doc_dir, f), 'r')

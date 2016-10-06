@@ -1,0 +1,8 @@
+import json
+
+with open("vendors.json","r") as f:
+    dicter = json.loads(f.read())
+
+for elem in dicter:
+    for value in elem["fields"]:
+        

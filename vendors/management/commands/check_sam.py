@@ -10,7 +10,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
-from Vendors.models import Vendors, Pool, SetAside, SamLoad
+from vendors.models import Vendors, Pool, SetAside, SamLoad
 
 warnings.filterwarnings('ignore')
 
@@ -21,26 +21,26 @@ class Command(BaseCommand):
 
     logger = logging.getLogger('sam')
 
-    def get_value(self, obj, key, Vendors):
+    def get_value(self, obj, key, vendors):
         try:
             return obj[key]
         except KeyError as k:
-            self.logger.debug("There was a key error on {0}: {1}".format(Vendors.duns, k))
+            self.logger.debug("There was a key error on {0}: {1}".format(vendors.duns, k))
             return None
 
     def handle(self, *args, **kwargs):
 
         print("-------BEGIN CHECK_SAM PROCESS-------")
         try:
-            Vendors = Vendors.objects.all()
-            for v in Vendors:
+            vendors = Vendors.objects.all()
+            for v in vendors:
                 #keep from bringing the SAM API down
                 time.sleep(2)
                 #get SAM.gov API response for this Vendors
                 uri = settings.SAM_API_URL + v.duns_4 + '?api_key=' + settings.SAM_API_KEY
                 log_uri = settings.SAM_API_URL + v.duns_4
 
-                self.logger.debug("Fetching Vendors at {0}".format(log_uri))
+                self.logger.debug("Fetching vendors at {0}".format(log_uri))
                 req = requests.get(uri)
                 
                 #check and see if error code is forbidden -- exit because api key problem

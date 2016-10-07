@@ -57,10 +57,8 @@ class Command(BaseCommand):
                         data = line[1:11]
                         piid = data[1]
                         duns = self.replace_x(data[2])
-                        #import code
-                        #code.interact(local=locals())
                         print("created new vendors object")
-                        new_obj, created = Vendors.objects.get_or_create(duns=int(duns))
+                        new_obj, created = Vendors.objects.get_or_create(duns=duns)
                         print("got to attr_dict")
                         attr_dict = {
                             'name': data[0],

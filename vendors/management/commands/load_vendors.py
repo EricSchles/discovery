@@ -29,6 +29,7 @@ class Command(BaseCommand):
                 v.setasides.add(sa)
 
     def handle(self, *args, **kwargs):
+        print("start of handle")
         #read in setasides from yaml file
 
         #read in Vendors from csv files 
@@ -36,13 +37,14 @@ class Command(BaseCommand):
         for vehicle in settings.VEHICLES:
             #cycle through predefined set of vehicles
             doc_dir = os.path.join(settings.BASE_DIR, 'vendors/docs/{0}/pools'.format(vehicle))
-            
+            print("inside outter for-loop")
             for f in os.listdir(doc_dir):
                 datafile = open(os.path.join(doc_dir, f), 'r')
                 pool = re.match('Pool (.*)-Table.*', f).group(1) 
                 reader = csv.reader(datafile)
 
                 try:
+                    print("created pool_obj")
                     pool_obj = Pool.objects.get(number=pool, vehicle__iexact=vehicle)
                     for idx, line in enumerate(reader): 
                         #skip header rows
@@ -51,12 +53,15 @@ class Command(BaseCommand):
                         if line[1] == '' or line[3] == '': continue
                         
                         #relevant columns
+                       
                         data = line[1:11]
                         piid = data[1]
                         duns = self.replace_x(data[2])
-    
-                        new_obj, created = Vendors.objects.get_or_create(duns=duns)
-
+                        #import code
+                        #code.interact(local=locals())
+                        print("created new vendors object")
+                        new_obj, created = Vendors.objects.get_or_create(duns=int(duns))
+                        print("got to attr_dict")
                         attr_dict = {
                             'name': data[0],
                             'duns': self.replace_x(data[2]),
@@ -72,7 +77,7 @@ class Command(BaseCommand):
                         for k, v in attr_dict.items(): 
                             if v and v != '' and v != ' ':
                                 setattr(new_obj, k, v)
-
+                        print("saved new object")
                         new_obj.save()
 
                         #add pool relationship
@@ -96,6 +101,7 @@ class Command(BaseCommand):
                     self.logger.debug("More than one pool matched {}. Integrity error!".format(pool))
 
             #call the sam check to fill in extra fields
+            print("calling sam check")
             call_command('check_sam')
             self.load_temp_setasides()
 

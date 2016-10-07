@@ -13,7 +13,6 @@ STATUS_CHOICES = (
 
 
 class Vendors(models.Model):
-    id = models.CharField(primary_key=True, max_length=128)
     name = models.CharField(max_length=128)
     duns = models.CharField(max_length=9, unique=True)
     duns_4 = models.CharField(max_length=13, unique=True)

@@ -3,7 +3,7 @@ from optparse import make_option
 from django.core.management import call_command
 from django.conf import settings
 from pyfpds import Contracts
-from vendor.models import Vendor
+from vendors.models import Vendors
 from contract.models import Contract, FPDSLoad
 from contract import catch_key_error
 from datetime import datetime, timedelta
@@ -157,14 +157,14 @@ class Command(BaseCommand):
             #allow to start from a certain vendor
             if 'id' in options:
                 vendor_id = int(options['id'])
-                vendors = Vendor.objects.filter(id__gte=vendor_id).order_by('id')
+                vendors = Vendors.objects.filter(id__gte=vendor_id).order_by('id')
             else:
-                vendors = Vendor.objects.all().order_by('id')
+                vendors = Vendors.objects.all().order_by('id')
 
             for v in vendors:
 
                 by_piid = {} 
-                v_con = self.contracts.get(vendor_duns=v.duns, last_modified_date=self.date_format(load_from, load_to), num_records='all')
+                v_con = self.contracts.get(vendors_duns=v.duns, last_modified_date=self.date_format(load_from, load_to), num_records='all')
 
                 for vc in v_con:
                     
@@ -222,7 +222,7 @@ class Command(BaseCommand):
 
                     self.logger.debug(self.contracts.pretty_print(by_piid[piid]))
                     
-                    con, created = Contract.objects.get_or_create(piid=piid, vendor=v)
+                    con, created = Contract.objects.get_or_create(piid=piid, vendors=v)
 
                     for mod in by_piid[piid]:
                         total += float(mod.get('obligated_amount'))

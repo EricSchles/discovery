@@ -102,9 +102,14 @@ def get_naics(award):
     if name and type(name) == str:
         return name
 
-    elif name: 
+    elif name:
+        try:
+            award['productOrServiceInformation']['principalNAICSCode']['#text']
+        except:
+            import code
+            code.interact(local=locals())
         return award['productOrServiceInformation']['principalNAICSCode']['#text']
-
+    
 @catch_key_error
 def get_psc(award):
     return award['productOrServiceInformation']['productOrServiceCode']['#text']

@@ -22,11 +22,16 @@ class Command(BaseCommand):
 
     def load_temp_setasides(self):
         reader = csv.reader(open(os.path.join(settings.BASE_DIR, 'vendors/docs/temp_8a_hubzone.csv'))) 
+        success = 0
+        failure = 0
         for line in reader:
-            v = Vendors.objects.get(duns=line[1])
-            sa = SetAside.objects.get(code=line[2])
-            if sa not in v.setasides.all():
-                v.setasides.add(sa)
+            try:
+                v = Vendors.objects.get(duns=line[1])
+                sa = SetAside.objects.get(code=line[2])
+                if sa not in v.setasides.all():
+                    v.setasides.add(sa)
+            except:
+                pass
 
     def handle(self, *args, **kwargs):
         print("start of handle")

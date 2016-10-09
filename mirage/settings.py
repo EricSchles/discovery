@@ -88,7 +88,7 @@ DATABASES = {
     #     'NAME': 'oasis',
     #     'USER': 'oasis',
     #     'PASSWORD': '1234'
-    }
+    #}
 }
 
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)

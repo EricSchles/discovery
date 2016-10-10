@@ -37,12 +37,10 @@ class Command(BaseCommand):
                 #keep from bringing the SAM API down
                 time.sleep(2)
                 #get SAM.gov API response for this Vendors
-                try:
-                    uri = settings.SAM_API_URL + v.duns_4 + '?api_key=' + settings.SAM_API_KEY
-                    log_uri = settings.SAM_API_URL + v.duns_4
-                except:
-                    import code
-                    code.interact(local=locals())
+                
+                uri = settings.SAM_API_URL + v.duns_4 + '?api_key=' + settings.SAM_API_KEY
+                log_uri = settings.SAM_API_URL + v.duns_4
+                
                 self.logger.debug("Fetching vendors at {0}".format(log_uri))
                 req = requests.get(uri)
                 

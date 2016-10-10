@@ -49,28 +49,46 @@ def get_agency_name(award_id):
 
 @catch_key_error
 def get_transaction_number(award_id):
-    return award_id['awardContractID']['transactionNumber']
-
+    try:
+        return award_id['awardContractID']['transactionNumber']
+    except:
+        return None
+    
 @catch_key_error
 def get_ultimate_completion_date(award):
-    return award['relevantContractDates']['ultimateCompletionDate']
-
+    try:
+        return award['relevantContractDates']['ultimateCompletionDate']
+    except:
+        return None
+    
 @catch_key_error
 def get_current_completion_date(award):
-    return award['relevantContractDates']['currentCompletionDate']
-
+    try:
+        return award['relevantContractDates']['currentCompletionDate']
+    except:
+        return None
+    
 @catch_key_error
 def get_annual_revenue(award):
-    return award['vendor']['vendorSiteDetails']['vendorOrganizationFactors']['annualRevenue']
-
+    try:
+        return award['vendor']['vendorSiteDetails']['vendorOrganizationFactors']['annualRevenue']
+    except:
+        return None
+    
 @catch_key_error
 def get_number_of_employees(award):
-    return award['vendor']['vendorSiteDetails']['vendorOrganizationFactors']['numberOfEmployees']
-
+    try:
+        return award['vendor']['vendorSiteDetails']['vendorOrganizationFactors']['numberOfEmployees']
+    except:
+        return None
+    
 @catch_key_error
 def get_last_modified_by(award):
-    return award['transactionInformation']['lastModifiedBy']
-
+    try:
+        return award['transactionInformation']['lastModifiedBy']
+    except:
+        return None
+    
 def get_contract_pricing_name(award):
     
     @catch_key_error
@@ -81,19 +99,29 @@ def get_contract_pricing_name(award):
     if name and type(name) == str:
         return name
 
-    elif name: 
-        return award['contractData']['typeOfContractPricing']['@description']
-
+    elif name:
+        try:
+            return award['contractData']['typeOfContractPricing']['@description']
+        except:
+            return award['contractData']['typeOfContractPricing']
+        
 @catch_key_error
 def get_contract_pricing_id(award):
-    return award['contractData']['typeOfContractPricing']['#text']
-
+    try:
+        return award['contractData']['typeOfContractPricing']['#text']
+    except:
+        return None
+    
 @catch_key_error
 def get_reason_for_modification(award):
-    return award['contractData']['reasonForModification']['#text']
-
+    try:
+        return award['contractData']['reasonForModification']['#text']
+    except:
+        return None
+    
 def get_naics(award):
     
+    #this is failing for some reason
     @catch_key_error
     def get_name(award):
         return award['productOrServiceInformation']['principalNAICSCode']
@@ -104,16 +132,16 @@ def get_naics(award):
 
     elif name:
         try:
-            award['productOrServiceInformation']['principalNAICSCode']['#text']
+            return award['productOrServiceInformation']['principalNAICSCode']['#text']
         except:
-            import code
-            code.interact(local=locals())
-        return award['productOrServiceInformation']['principalNAICSCode']['#text']
+            return award['productOrServiceInformation']['principalNAICSCode']
     
 @catch_key_error
 def get_psc(award):
-    return award['productOrServiceInformation']['productOrServiceCode']['#text']
-
+    try:
+        return award['productOrServiceInformation']['productOrServiceCode']['#text']
+    except:
+        return None
 
 def last_load(load_all=False):
     load = FPDSLoad.objects.all().order_by('-load_date')

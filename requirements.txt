@@ -1,8 +1,10 @@
 django==1.8.0
+-e git+https://github.com/EricSchles/pyfpds.git#egg=pyfpds
 PyYAML
 boto
 coverage
 django-hstore
+-e git://github.com/18F/django-rest-swagger.git@fix-url-grouping#egg=django-rest-swagger
 djangorestframework==2.3.14
 psycopg2
 pytz

@@ -12,6 +12,7 @@ import logging
 import traceback
 
 def get_award_id_obj(award):
+    print("got to get_award_id_obj")
     if 'awardID' in award: 
         return award['awardID']
     else:
@@ -19,6 +20,7 @@ def get_award_id_obj(award):
 
 
 def get_piid(award_id):
+    print("got to get_piid")
     piid = ''
     if 'referencedIDVID' in award_id:
         #part of an IDIQ
@@ -31,17 +33,20 @@ def get_piid(award_id):
     return piid
 
 def get_mod(award_id):
+    print("got to get_mod")
     if 'modNumber' in award_id:
         return award_id['modNumber']
     return award_id['awardContractID']['modNumber']
 
 def get_agency_id(award_id):
+    print("got to get_agency_id")
     if 'awardContractID' in award_id:
         return award_id['awardContractID']['agencyID']['#text']
     else:
         return award_id['agencyID']['#text']
 
 def get_agency_name(award_id):
+    print("got to get_agency_name")
     if 'awardContractID' in award_id:
         return award_id['awardContractID']['agencyID']['@name']
     else:
@@ -49,6 +54,7 @@ def get_agency_name(award_id):
 
 @catch_key_error
 def get_transaction_number(award_id):
+    print("got to get_transaction_number")
     try:
         return award_id['awardContractID']['transactionNumber']
     except:
@@ -56,6 +62,7 @@ def get_transaction_number(award_id):
     
 @catch_key_error
 def get_ultimate_completion_date(award):
+    print("got to get_ultimate_completion_date")
     try:
         return award['relevantContractDates']['ultimateCompletionDate']
     except:
@@ -63,6 +70,7 @@ def get_ultimate_completion_date(award):
     
 @catch_key_error
 def get_current_completion_date(award):
+    print("got to get_current_completion_date")
     try:
         return award['relevantContractDates']['currentCompletionDate']
     except:
@@ -70,6 +78,7 @@ def get_current_completion_date(award):
     
 @catch_key_error
 def get_annual_revenue(award):
+    print("got to get_annual_revenue")
     try:
         return award['vendor']['vendorSiteDetails']['vendorOrganizationFactors']['annualRevenue']
     except:
@@ -77,6 +86,7 @@ def get_annual_revenue(award):
     
 @catch_key_error
 def get_number_of_employees(award):
+    print("got to get_number_of_employees")
     try:
         return award['vendor']['vendorSiteDetails']['vendorOrganizationFactors']['numberOfEmployees']
     except:
@@ -84,13 +94,14 @@ def get_number_of_employees(award):
     
 @catch_key_error
 def get_last_modified_by(award):
+    print("got to get_last_modified_by")
     try:
         return award['transactionInformation']['lastModifiedBy']
     except:
         return None
     
 def get_contract_pricing_name(award):
-    
+    print("got to get_contract_pricing_name")
     @catch_key_error
     def get_name(award):
         return award['contractData']['typeOfContractPricing']
@@ -107,6 +118,7 @@ def get_contract_pricing_name(award):
         
 @catch_key_error
 def get_contract_pricing_id(award):
+    print("got to get_contract_princing_id")
     try:
         return award['contractData']['typeOfContractPricing']['#text']
     except:
@@ -114,13 +126,14 @@ def get_contract_pricing_id(award):
     
 @catch_key_error
 def get_reason_for_modification(award):
+    print("got to get_reason_for_modification")
     try:
         return award['contractData']['reasonForModification']['#text']
     except:
         return None
     
 def get_naics(award):
-    
+    print("got to get_naics")
     #this is failing for some reason
     @catch_key_error
     def get_name(award):
@@ -138,12 +151,14 @@ def get_naics(award):
     
 @catch_key_error
 def get_psc(award):
+    print("got to get_psc")
     try:
         return award['productOrServiceInformation']['productOrServiceCode']['#text']
     except:
         return None
 
 def last_load(load_all=False):
+    print("got to last_load")
     load = FPDSLoad.objects.all().order_by('-load_date')
     if len(load) > 0 and not load_all:
         return load[0].load_date    
@@ -153,6 +168,7 @@ def last_load(load_all=False):
 
 
 def create_load(load_date):
+    print("got to create_load")
     #overwrite the most recent load object to keep the table from growing 
     load = FPDSLoad.objects.all().order_by('-load_date')
     if len(load) > 0:
@@ -166,7 +182,7 @@ def create_load(load_date):
 class Command(BaseCommand):
     
     logger = logging.getLogger('fpds')
-    contracts = Contracts(logger=logger.debug)
+    contracts = Contracts()
 
     option_list = BaseCommand.option_list \
                   + (make_option('--load_all', action='store_true', dest='load_all', default=False, help="Force load of all contracts"), ) \
@@ -189,18 +205,25 @@ class Command(BaseCommand):
            
             #allow to start from a certain vendor
             if 'id' in options:
+                print("inside if-statement: filter by vendor_id and order_by id")
                 vendor_id = int(options['id'])
-                vendors = Vendors.objects.filter(id__gte=vendor_id).order_by('id')
+                vendors = Vendors.objects.filter(id__gte=vendor_id)#.order_by('id')
+                print("Size of vendors object:",len(vendors))
             else:
-                vendors = Vendors.objects.all().order_by('id')
+                print("order_by id")
+                vendors = Vendors.objects.all()#.order_by('id')
+                print("Size of vendors object:",len(vendors))
 
-            for v in vendors:
-
-                by_piid = {} 
-                v_con = self.contracts.get(vendors_duns=v.duns, last_modified_date=self.date_format(load_from, load_to), num_records='all')
-
-                for vc in v_con:
+            for outter_ind,v in enumerate(vendors):
+                print("inside outter for loop:",outter_ind)
+                by_piid = {}
+                try:
+                    v_con = self.contracts.get(vendors_duns=v.duns, last_modified_date=self.date_format(load_from, load_to), num_records='all')
+                except:
+                    pass
                     
+                for first_inner_ind,vc in enumerate(v_con):
+                    print("inside inner for loop:",first_inner_ind)
                     con_type = ''
                     if 'IDV' in vc['content']:
                         continue # don't get IDV records
@@ -245,9 +268,10 @@ class Command(BaseCommand):
                         by_piid[piid].append(record)
                     else:
                         by_piid[piid] = [record, ]
-
+                counter = 0
                 for piid, records in by_piid.items():
-
+                    counter += 1
+                    print("inside second inner for-loop:",counter)
                     by_piid[piid] = sorted(records, key=lambda x: (x['mod_number'], x['transaction_number']))
                     total = 0 # amount obligated
                     
@@ -306,6 +330,6 @@ class Command(BaseCommand):
             import sys
             traceback.print_tb(sys.exc_info()[2])
             self.logger.debug("MAJOR ERROR -- PROCESS ENDING EXCEPTION -- {0}".format(e))
-        
+            print("got to end of process, with exception")
         print("-------END LOAD_FPDS PROCESS-------")
 

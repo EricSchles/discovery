@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'mirage.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 DATABASES = {
     #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #    'NAME': 'oasis',
-    #    'USER': 'oasis',
-    #    'PASSWORD': '1234'
+    #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #   'NAME': 'oasis',
+    #   'USER': 'oasis',
+    #   'PASSWORD': '1234'
     #}
 }
 

@@ -6,7 +6,7 @@ var InputHandler = {
         this.populateDropDown();
 
         // event bindings
-        //$('#naics-code').change(this.sendCodeChange.bind(InputHandler));
+        $('#naics-code').change(this.sendCodeChange.bind(InputHandler));
         $('#setaside-filters').change(this.sendFilterChange);
         $('form#vehicle-select select').change(this.sendVehicleChange.bind(InputHandler));
         //should this be bound to the InputHandler? KBD

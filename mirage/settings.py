@@ -94,7 +94,7 @@ DATABASES = {
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 SAM_API_KEY = os.getenv("OASIS_DISCOVERY_SAM_API_KEY")
-API_HOST = "https://data.gov"
+API_HOST = "https://api.data.gov/"
 API_KEY = os.getenv("OASIS_DISCOVERY_API_KEY")
 
 # Internationalization

@@ -1,0 +1,33 @@
+DAP - analytics.usa.gov
+
+1) Talking to infrastructure about how to handle 1 off tasks - specifically the analytics ingestion
+2) 18F.gsa.gov - federalist Eric Mill is happy to handle this
+
+Pulse - static site / jekyll site
+
+EC2 instance - pull request to repo, which updated site on server - 
+
+Frontend - flask app
+TinyDB
+server - unicorn
+
+Weekly task - 25 - 40 hrs
+Starts thursday night and ends saturday morning
+
+To Dos:
+
+Create modularity for the application
+Scanning should happen then results should be processed
+
+One box for scanning
+One box for processing / etl / storage
+
+Infrastructure - Jez, Eric Mill will help out here
+
+Short time line fix - freeze data, make it a static site
+There are 2 websites in the IAA boundry - policy support site.
+
+https://https.cio.gov/
+
+
+

@@ -206,8 +206,8 @@ class Command(BaseCommand):
             #allow to start from a certain vendor
             if 'id' in options:
                 print("inside if-statement: filter by vendor_id and order_by id")
-                vendor_id = int(options['id'])
-                vendors = Vendors.objects.filter(id__gte=vendor_id)#.order_by('id')
+                #vendor_id = int(options['id'])
+                vendors = Vendors.objects.all()#filter(id__gte=vendors_id)#.order_by('id')
                 print("Size of vendors object:",len(vendors))
             else:
                 print("order_by id")
@@ -278,9 +278,9 @@ class Command(BaseCommand):
                     self.logger.debug("================{0}===Vendor {1}=================\n".format(piid, v.duns))
 
                     self.logger.debug(self.contracts.pretty_print(by_piid[piid]))
-                    
+                    print("got to contract get or create")
                     con, created = Contract.objects.get_or_create(piid=piid, vendors=v)
-
+                    print("completed contract get or create")
                     for mod in by_piid[piid]:
                         total += float(mod.get('obligated_amount'))
                         con.date_signed = mod.get('signed_date') 

@@ -39,6 +39,7 @@ TEMPLATE_DIRS = (
 
 )
 ALLOWED_HOSTS = [
+    'discovery.gsa.gov',
     '.gsa.gov',
     '127.0.0.1', 
     '.18f.us',
@@ -83,18 +84,18 @@ WSGI_APPLICATION = 'mirage.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 DATABASES = {
-    #'default': {
-    #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #   'NAME': 'oasis',
-    #   'USER': 'oasis',
-    #   'PASSWORD': '1234'
-    #}
+    'default': {
+      'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      'NAME': 'oasis',
+      'USER': 'oasis',
+      'PASSWORD': '1234'
+    }
 }
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 SAM_API_KEY = os.getenv("OASIS_DISCOVERY_SAM_API_KEY")
-API_HOST = "https://api.data.gov/gsa/discovery"
+API_HOST = "https://api.data.gov/gsa/discovery/"
 API_KEY = os.getenv("OASIS_DISCOVERY_API_KEY")
 
 # Internationalization

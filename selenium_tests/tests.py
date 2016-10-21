@@ -380,4 +380,5 @@ class FunctionalTests(LiveServerTestCase):
         self.driver.quit()
 
 if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+    #unittest.main(warnings='ignore')
+    unittest.main()

@@ -4,7 +4,7 @@ memory: 1G
 stack: cflinuxfs2
 instances: 1
 applications:
-- name: discovery-dev
+- name: discovery-prod
   path: .
   timeout: 180
 services:

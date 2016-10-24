@@ -3,9 +3,9 @@
 memory: 512M
 instances: 1
 applications:
-- name: discovery
+- name: discovery-dev
   path: .
   timeout: 180
 default_versions:
 - name: python
-  version: 3.5.2
+  version: 2.7.11

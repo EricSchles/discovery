@@ -45,6 +45,8 @@ class ShortVendorSerializer(serializers.ModelSerializer):
             'setasides', 'sam_status', 'sam_exclusion', 'sam_url', 'contracts_in_naics')
 
     def get_contracts_in_naics(self, obj):
+        #import code
+        #code.interact(local=locals())
         return Contract.objects.filter(NAICS=self.context['naics'].code, vendor=obj).count()
 
 class ContractSerializer(serializers.ModelSerializer):

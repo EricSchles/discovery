@@ -93,8 +93,8 @@ DATABASES = {
 #DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 SAM_API_KEY = os.getenv("OASIS_DISCOVERY_SAM_API_KEY")
-API_HOST = "https://api.data.gov/gsa/discovery/"
-API_KEY = os.getenv("OASIS_DISCOVERY_API_KEY")
+API_HOST = "http://localhost:8000/"
+API_KEY = ''#os.getenv("OASIS_DISCOVERY_API_KEY")
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

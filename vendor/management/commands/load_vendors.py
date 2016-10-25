@@ -23,7 +23,10 @@ class Command(BaseCommand):
     def load_temp_setasides(self):
         reader = csv.reader(open(os.path.join(settings.BASE_DIR, 'vendor/docs/temp_8a_hubzone.csv'))) 
         for line in reader:
-            v = Vendor.objects.get(duns=line[1])
+            try:
+                v = Vendor.objects.get(duns=line[1])
+            except:
+                continue
             sa = SetAside.objects.get(code=line[2])
             if sa not in v.setasides.all():
                 v.setasides.add(sa)

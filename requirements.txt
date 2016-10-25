@@ -1,5 +1,5 @@
 django==1.8.0
--e git+https://github.com/18F/pyfpds.git#egg=pyfpds
+-e git+https://github.com/EricSchles/pyfpds.git#egg=pyfpds
 PyYAML
 boto
 coverage

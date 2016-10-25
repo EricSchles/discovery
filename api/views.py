@@ -65,7 +65,7 @@ class ListVendors(APIView):
     """
     def get(self, request, format=None):
 
-        try: 
+        try:
             naics =  Naics.objects.get(short_code=request.QUERY_PARAMS.get('naics'))
             vehicle = request.QUERY_PARAMS.get('vehicle', None)
             if vehicle:

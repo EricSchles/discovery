@@ -6,6 +6,7 @@ applications:
 - name: discovery-dev
   path: .
   timeout: 180
+buildpack: https://github.com/18F/python-buildpack.git#no-proto
 default_versions:
 - name: python
-  version: 2.7.11
+  version: 2.7.12
